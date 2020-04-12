@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UnsplashApp</string>
+    <string name="toast_fail_message">There is some problem with server</string>
+    <string name="search_query_hint">Search</string>
+    <string name="toast_fail_message_download">There was some problem while downloading image</string>
+    <string name="toast_success_message_download">Image is downloaded</string>
+    <string name="toast_permission_required">You need to give a permission to download an image</string>
+</resources>
