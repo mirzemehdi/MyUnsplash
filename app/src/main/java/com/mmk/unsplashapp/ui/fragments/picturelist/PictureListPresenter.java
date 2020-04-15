@@ -2,8 +2,8 @@ package com.mmk.unsplashapp.ui.fragments.picturelist;
 
 import com.mmk.unsplashapp.R;
 import com.mmk.unsplashapp.intractor.PhotosIntractor;
-import com.mmk.unsplashapp.model.Picture;
-import com.mmk.unsplashapp.network.responses.SearchResponse;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
+import com.mmk.unsplashapp.pojo.ResponseSearchPicturesPOJO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,31 +29,7 @@ public class PictureListPresenter implements PictureListContractor.Presenter {
         if (mView == null) return;
         mView.showItemLoading(true);
         photosIntractor.loadPhotos(String.valueOf(currentPageNumber)
-                , new Callback<List<SearchResponse.Result>>() {
-                    @Override
-                    public void onResponse(Call<List<SearchResponse.Result>> call, Response<List<SearchResponse.Result>> response) {
-                        List<Picture> pictureList = new ArrayList<>();
-
-                        if (response.isSuccessful()) {
-                            for (SearchResponse.Result result : response.body()) {
-                                Picture picture = new Picture(result.getId(),
-                                        result.getUrls().getSmall(),
-                                        result.getUrls().getRegular());
-                                pictureList.add(picture);
-
-                            }
-                            mView.addPictures(pictureList);
-                            currentPageNumber++;
-                        } else {
-                            error();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<SearchResponse.Result>> call, Throwable t) {
-                        error();
-                    }
-                });
+                , new LoadPicturesCallBack());
 
     }
 
@@ -63,33 +39,10 @@ public class PictureListPresenter implements PictureListContractor.Presenter {
 
         mView.showItemLoading(true);
         photosIntractor.searchPhotos(query, String.valueOf(currentPageNumber)
-                , new Callback<SearchResponse>() {
-                    @Override
-                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-                        List<Picture> pictureList = new ArrayList<>();
-
-                        if (response.isSuccessful()) {
-                            for (SearchResponse.Result result : response.body().getResults()) {
-                                Picture picture = new Picture(result.getId(),
-                                        result.getUrls().getSmall(),
-                                        result.getUrls().getRegular());
-                                pictureList.add(picture);
-
-                            }
-                            mView.addPictures(pictureList);
-                            currentPageNumber++;
-                        } else {
-                            error();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<SearchResponse> call, Throwable t) {
-                        error();
-                    }
-                });
+                , new SearchPicturesCallBack());
 
     }
+
 
     @Override
     public void reset() {
@@ -102,5 +55,60 @@ public class PictureListPresenter implements PictureListContractor.Presenter {
                 .getResources()
                 .getString(R.string.toast_fail_message));
         mView.showItemLoading(false);
+    }
+
+    public class SearchPicturesCallBack implements Callback<ResponseSearchPicturesPOJO>{
+
+        @Override
+        public void onResponse(Call<ResponseSearchPicturesPOJO> call, Response<ResponseSearchPicturesPOJO> response) {
+            List<PicturePOJO> pictureList = new ArrayList<>();
+
+            if (response.isSuccessful()) {
+                for (ResponseSearchPicturesPOJO.Result result : response.body().getResults()) {
+                    PicturePOJO picture = new PicturePOJO(result.getId(),
+                            result.getUrls().getSmall(),
+                            result.getUrls().getRegular());
+                    pictureList.add(picture);
+
+                }
+                mView.addPictures(pictureList);
+                currentPageNumber++;
+            } else {
+                error();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ResponseSearchPicturesPOJO> call, Throwable t) {
+            error();
+        }
+    }
+
+
+    public class LoadPicturesCallBack implements Callback<List<ResponseSearchPicturesPOJO.Result>>{
+
+        @Override
+        public void onResponse(Call<List<ResponseSearchPicturesPOJO.Result>> call, Response<List<ResponseSearchPicturesPOJO.Result>> response) {
+            List<PicturePOJO> pictureList = new ArrayList<>();
+
+            if (response.isSuccessful()) {
+                for (ResponseSearchPicturesPOJO.Result result : response.body()) {
+                    PicturePOJO picture = new PicturePOJO(result.getId(),
+                            result.getUrls().getSmall(),
+                            result.getUrls().getRegular());
+                    pictureList.add(picture);
+
+                }
+                mView.addPictures(pictureList);
+                currentPageNumber++;
+            } else {
+                error();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<List<ResponseSearchPicturesPOJO.Result>> call, Throwable t) {
+            error();
+        }
     }
 }

@@ -1,8 +1,8 @@
 package com.mmk.unsplashapp.ui.fragments.picturelist;
 
 
-import com.mmk.unsplashapp.model.Picture;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
 
 public interface PictureItemClickListener {
-    void onClick(Picture picture);
+    void onClick(PicturePOJO picture);
 }

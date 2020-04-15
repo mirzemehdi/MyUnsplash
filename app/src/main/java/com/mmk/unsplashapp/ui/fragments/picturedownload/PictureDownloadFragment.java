@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.github.abdularis.buttonprogress.DownloadButtonProgress;
 import com.mmk.unsplashapp.R;
-import com.mmk.unsplashapp.model.Picture;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
 import com.mmk.unsplashapp.ui.fragments.picturelist.PictureListFragment;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -30,7 +30,7 @@ public class PictureDownloadFragment extends Fragment implements PictureDownload
     private PictureDownloadContractor.Presenter mPresenter;
 
     private ImageView imageView;
-    private Picture picture;
+    private PicturePOJO picture;
     private ProgressBar progressBar;
     private DownloadButtonProgress btnDownload;
 
@@ -49,18 +49,18 @@ public class PictureDownloadFragment extends Fragment implements PictureDownload
 
     private void init(View view) {
         if (getArguments() != null) {
-            picture = (Picture) getArguments().getParcelable(PictureListFragment.ARGUMENT_PICTURE);
+            picture = (PicturePOJO) getArguments().getParcelable(PictureListFragment.ARGUMENT_PICTURE);
         }
 
 
-        progressBar = view.findViewById(R.id.progressBar_loading);
-        imageView = view.findViewById(R.id.imageView_activity_download);
-        btnDownload = view.findViewById(R.id.btn_download);
+        progressBar = view.findViewById(R.id.progressbar_download_loading);
+        imageView = view.findViewById(R.id.image_view_download);
+        btnDownload = view.findViewById(R.id.button_download);
         showLoading(true);
         if (picture != null) {
             Picasso.with(getContextOfActivity())
                     .load(picture.getRegularUrl())
-                    .placeholder(R.drawable.item_place_holder)
+                    .placeholder(R.drawable.drawable_image_place_holder)
                     .into(imageView, new Callback() {
                         @Override
                         public void onSuccess() {

@@ -1,6 +1,6 @@
 package com.mmk.unsplashapp.ui.fragments.picturedownload;
 
-import com.mmk.unsplashapp.model.Picture;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
 import com.mmk.unsplashapp.ui.BaseView;
 
 public interface PictureDownloadContractor {
@@ -12,6 +12,6 @@ public interface PictureDownloadContractor {
 
     interface Presenter {
 
-        void downloadImage(Picture picture);
+        void downloadImage(PicturePOJO picture);
     }
 }

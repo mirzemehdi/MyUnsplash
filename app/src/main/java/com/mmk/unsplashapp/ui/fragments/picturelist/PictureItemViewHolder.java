@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mmk.unsplashapp.R;
-import com.mmk.unsplashapp.model.Picture;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +29,7 @@ public class PictureItemViewHolder extends RecyclerView.ViewHolder{
 
         }
 
-        public void onBind(final Picture picture){
+        public void onBind(final PicturePOJO picture){
             shimmerFrameLayout.showShimmer(true);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -41,7 +41,7 @@ public class PictureItemViewHolder extends RecyclerView.ViewHolder{
 
             Picasso.with(mContext)
                     .load(picture.getSmallUrl())
-                    .placeholder(R.drawable.item_place_holder)
+                    .placeholder(R.drawable.drawable_image_place_holder)
                     .into(imageView, new Callback() {
                         @Override
                         public void onSuccess() {

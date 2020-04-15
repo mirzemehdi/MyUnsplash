@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +22,10 @@ import com.mmk.unsplashapp.R;
 import com.mmk.unsplashapp.ui.activities.main.MainActivity;
 import com.mmk.unsplashapp.ui.fragments.picturedownload.PictureDownloadFragment;
 import com.mmk.unsplashapp.utils.ILoadMore;
-import com.mmk.unsplashapp.model.Picture;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
 import com.mmk.unsplashapp.utils.InfiniteScrollListener;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PictureListFragment extends Fragment implements PictureListContractor.View{
@@ -66,8 +64,8 @@ public class PictureListFragment extends Fragment implements PictureListContract
 
     private void init(View view) {
 
-        searchView=view.findViewById(R.id.searchView_main);
-        picturesRecyclerView=view.findViewById(R.id.picturesRecyclerView);
+        searchView=view.findViewById(R.id.search_view_picture_list);
+        picturesRecyclerView=view.findViewById(R.id.recycler_view_picture_list);
         picturesRecyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager staggeredGridLayoutManager=new StaggeredGridLayoutManager(
                 2, LinearLayoutManager.VERTICAL);
@@ -109,7 +107,7 @@ public class PictureListFragment extends Fragment implements PictureListContract
 
         picturesAdapter.setPictureItemClickListener(new PictureItemClickListener() {
             @Override
-            public void onClick(Picture picture) {
+            public void onClick(PicturePOJO picture) {
                 Bundle args=new Bundle();
                 args.putParcelable(ARGUMENT_PICTURE,picture);
                 PictureDownloadFragment downloadFragment=new PictureDownloadFragment();
@@ -129,7 +127,7 @@ public class PictureListFragment extends Fragment implements PictureListContract
     }
 
     @Override
-    public void addPictures(List<Picture> pictureList) {
+    public void addPictures(List<PicturePOJO> pictureList) {
         picturesAdapter.addPictureList(pictureList);
     }
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 
 import com.mmk.unsplashapp.R;
-import com.mmk.unsplashapp.model.Picture;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
 import com.mmk.unsplashapp.utils.viewholder.LoadingViewHolder;
 
 
@@ -22,7 +22,7 @@ public class PicturesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
 
-    private List<Picture> pictureList;
+    private List<PicturePOJO> pictureList;
     private PictureItemClickListener pictureItemClickListener;
 
     private final static int VIEW_TYPE_ITEM=0;
@@ -59,7 +59,7 @@ public class PicturesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         else if (holder instanceof PictureItemViewHolder){
             PictureItemViewHolder pictureItemViewHolder =(PictureItemViewHolder)holder;
 
-            Picture picture= pictureList.get(position);
+            PicturePOJO picture= pictureList.get(position);
             pictureItemViewHolder.onBind(picture);
 
         }
@@ -75,14 +75,14 @@ public class PicturesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return pictureList.size();
     }
 
-    public void addPictureList(List<Picture> pictureList) {
+    public void addPictureList(List<PicturePOJO> pictureList) {
         setLoading(false);
         int startPos=this.pictureList.size();
         this.pictureList.addAll(pictureList);
         notifyItemRangeChanged(startPos, pictureList.size());
     }
 
-    public List<Picture> getPictureList() {
+    public List<PicturePOJO> getPictureList() {
         return pictureList;
     }
 

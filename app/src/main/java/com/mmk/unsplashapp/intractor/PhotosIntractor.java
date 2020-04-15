@@ -1,37 +1,45 @@
 package com.mmk.unsplashapp.intractor;
 
-import android.util.Log;
-
-import com.mmk.unsplashapp.network.UnsplashApi;
-import com.mmk.unsplashapp.network.responses.SearchResponse;
+import com.mmk.unsplashapp.api.ApiInitHelper;
+import com.mmk.unsplashapp.pojo.ResponseSearchPicturesPOJO;
 
 import java.util.List;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PhotosIntractor {
 
-        public void loadPhotos(String pageNumber, Callback<List<SearchResponse.Result>> callbackResult){
-            UnsplashApi.getService()
-                    .loadPhotos(pageNumber)
-                    .enqueue(callbackResult);
-        }
+    private ApiInitHelper apiInitHelper;
 
-        public void searchPhotos(String query,String pageNumber,Callback<SearchResponse>callback){
-            UnsplashApi.getService()
-                    .search(query,pageNumber)
-                    .enqueue(callback);
-        }
-        public void downloadPhoto(String imageUrl, Callback<ResponseBody> callback){
-            UnsplashApi.getService()
-                    .downloadImage(imageUrl)
-                    .enqueue(callback);
-        }
+    public PhotosIntractor() {
+        apiInitHelper=new ApiInitHelper().initDefaultApi();
+    }
 
+    public void loadPhotos(String pageNumber, Callback<List<ResponseSearchPicturesPOJO.Result>> callbackResult) {
 
+        apiInitHelper
+                .createImageListService()
+                .getImageListService()
+                .loadPhotos(pageNumber)
+                .enqueue(callbackResult);
+    }
+
+    public void searchPhotos(String query, String pageNumber, Callback<ResponseSearchPicturesPOJO> callback) {
+        apiInitHelper
+                .createImageListService()
+                .getImageListService()
+                .search(query, pageNumber)
+                .enqueue(callback);
+    }
+
+    public void downloadPhoto(String imageUrl, Callback<ResponseBody> callback) {
+        apiInitHelper
+                .createDownloadService()
+                .getDownloadService()
+                .downloadImage(imageUrl)
+                .enqueue(callback);
+    }
 
 
 }

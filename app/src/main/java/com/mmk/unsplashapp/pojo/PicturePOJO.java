@@ -1,37 +1,35 @@
-package com.mmk.unsplashapp.model;
+package com.mmk.unsplashapp.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
-public class Picture  implements Parcelable  {
+public class PicturePOJO implements Parcelable  {
     private String id;
     private String smallUrl;
     private String regularUrl;
 
 
-    public Picture(String id,String smallUrl,String regularUrl) {
+    public PicturePOJO(String id, String smallUrl, String regularUrl) {
         this.id=id;
         this.smallUrl = smallUrl;
         this.regularUrl=regularUrl;
     }
 
-    protected Picture(Parcel in) {
+    protected PicturePOJO(Parcel in) {
         id = in.readString();
         smallUrl = in.readString();
         regularUrl = in.readString();
     }
 
-    public static final Creator<Picture> CREATOR = new Creator<Picture>() {
+    public static final Creator<PicturePOJO> CREATOR = new Creator<PicturePOJO>() {
         @Override
-        public Picture createFromParcel(Parcel in) {
-            return new Picture(in);
+        public PicturePOJO createFromParcel(Parcel in) {
+            return new PicturePOJO(in);
         }
 
         @Override
-        public Picture[] newArray(int size) {
-            return new Picture[size];
+        public PicturePOJO[] newArray(int size) {
+            return new PicturePOJO[size];
         }
     };
 

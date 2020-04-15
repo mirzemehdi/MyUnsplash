@@ -4,7 +4,7 @@ import android.os.Environment;
 
 import com.mmk.unsplashapp.R;
 import com.mmk.unsplashapp.intractor.PhotosIntractor;
-import com.mmk.unsplashapp.model.Picture;
+import com.mmk.unsplashapp.pojo.PicturePOJO;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +31,7 @@ public class PictureDownloadPresenter implements PictureDownloadContractor.Prese
 
 
     @Override
-    public void downloadImage(final Picture picture) {
+    public void downloadImage(final PicturePOJO picture) {
 
         mView.showDownloadProgress(true);
         photosIntractor.downloadPhoto(picture.getRegularUrl(), new Callback<ResponseBody>() {
