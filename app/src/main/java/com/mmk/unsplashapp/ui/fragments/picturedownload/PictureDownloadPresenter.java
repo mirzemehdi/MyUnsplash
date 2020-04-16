@@ -1,6 +1,10 @@
 package com.mmk.unsplashapp.ui.fragments.picturedownload;
 
+import android.content.Context;
 import android.os.Environment;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import com.mmk.unsplashapp.R;
 import com.mmk.unsplashapp.intractor.PhotosIntractor;
@@ -81,8 +85,8 @@ public class PictureDownloadPresenter implements PictureDownloadContractor.Prese
     private  boolean writeResponseBodyToDisk(ResponseBody body,String imageName) {
         try {
 
-            File rootPath=new File(Environment.getExternalStoragePublicDirectory
-                    (Environment.DIRECTORY_PICTURES)+File.separator
+           File rootExternalPictures= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            File rootPath=new File(rootExternalPictures+File.separator
                     +mView.getActivityOfActivity().getResources().getString(R.string.app_name));
             if (!rootPath.exists()) rootPath.mkdir();
 
@@ -124,4 +128,6 @@ public class PictureDownloadPresenter implements PictureDownloadContractor.Prese
             return false;
         }
     }
+
+
 }
